@@ -42,6 +42,7 @@ public class PandemieGui {
     private ArrayList <String> aflegstapel = new ArrayList<>();
     DataLayerJDBC datalayer = new DataLayerJDBC("pandemie", true);
     private ArrayList <String> selectedSteden = new ArrayList<>();
+    private ArrayList <JPanel> selectedCards = new ArrayList<>();
     private int infectieBeurt = 3;
 
 
@@ -87,6 +88,7 @@ public class PandemieGui {
 
                                     } else {
                                         selectedSteden.add(getrokkenNaam);
+                                        selectedCards.add(test);
                                         TitledBorder border = new TitledBorder(BorderFactory.createTitledBorder(new LineBorder(stad.toColor(),5), getrokkenNaam));
                                         border.setTitleJustification(TitledBorder.CENTER);
                                         test.setBorder(border);
@@ -116,12 +118,17 @@ public class PandemieGui {
             public void actionPerformed(ActionEvent e) {
                 aflegstapel.addAll(selectedSteden);
                 selectedSteden.clear();
-                spelerPanels.get(0).getKaartenPanel().remove(0);
-                System.out.println(spelerPanels.get(0));
+                for (JPanel card : selectedCards) {
+                    spelerPanels.get(0).getKaartenPanel().remove(card);
+                    System.out.println(card);
+                    spelerPanels.get(0).getKaartenPanel().revalidate();
+                }
                 spelerPanels.get(0).getKaartenPanel().revalidate();
+
 
             }
         });
+
         infectieTrekButton.setEnabled(true);
         handTrekButton.setEnabled(false);
         afleggen.setEnabled(false);
